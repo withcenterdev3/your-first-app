@@ -3,7 +3,7 @@ import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(JoshuaPage());
+  runApp(const JoshuaPage());
 }
 
 class JoshuaPage extends StatelessWidget {
@@ -36,8 +36,13 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Text('A Random idea'),
-          Text(appState.current.asLowerCase)
+          const Text('A Random AWESOME idea'),
+          Text(appState.current.asLowerCase),
+          ElevatedButton(
+              onPressed: () {
+                print('button pressed!');
+              },
+              child: const Text('NEXT'))
         ],
       ),
     );
