@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_first_app/enoch.dart';
 import 'package:your_first_app/ian.dart';
 import 'package:your_first_app/joshua.dart';
 import 'package:your_first_app/patrick.dart';
@@ -77,6 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => const PatrickPage()),
                   );
                 }),
+            ElevatedButton(
+                child: const Text('Enoch'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Enoch()));
+                })
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
