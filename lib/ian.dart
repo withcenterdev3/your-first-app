@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:provider/provider.dart';
 
 class IanPage extends StatefulWidget {
   const IanPage({super.key});
@@ -9,72 +10,46 @@ class IanPage extends StatefulWidget {
 }
 
 class _IanPageState extends State<IanPage> {
-  int _currentItem = 0;
-
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      const Expanded(
-          child: Center(
-        child: MyHomePage(),
-      )),
-      const Expanded(
-          child: Center(
-        child: Myfavorites(),
-      )),
-    ];
-
-    return Scaffold(
-        appBar: AppBar(
-          // backgroundColor: Colors.purple[100],
-          title: const Text('Ian'),
-          actions: <Widget>[
-            IconButton(
-                icon: const Icon(Icons.home),
-                tooltip: 'Home',
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-          ],
+    return ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: MaterialApp(
+        title: 'ian page',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        bottomNavigationBar: MediaQuery.of(context).size.width < 540
-            ? BottomNavigationBar(
-                items: const [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: "home"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite), label: "favorite")
-                ],
-                currentIndex: _currentItem,
-                onTap: (value) {
-                  setState(() {
-                    _currentItem = value;
-                  });
-                },
-              )
-            : null,
-        body: Row(
-          children: [
-            if (MediaQuery.of(context).size.width >= 540)
-              NavigationRail(
-                backgroundColor: Colors.purple[400],
-                destinations: const [
-                  NavigationRailDestination(
-                      icon: Icon(Icons.home), label: Text("home")),
-                  NavigationRailDestination(
-                      icon: Icon(Icons.favorite), label: Text("favorite")),
-                ],
-                selectedIndex: _currentItem,
-                onDestinationSelected: (int index) {
-                  setState(() {
-                    _currentItem = index;
-                    // Handle navigation or other changes based on selectedIndex
-                  });
-                },
-              ),
-            tabs[_currentItem],
-          ],
-        ));
+        home: MyHomePage(),
+      ),
+    );
+  }
+}
+
+class MyAppState extends ChangeNotifier {
+  var current = WordPair.random();
+  var mylist = <WordPair>[];
+
+  void getNext() {
+    current = WordPair.random();
+    if (mylist.contains(current)) {
+      mylist.remove(current);
+    } else {
+      mylist.add(current);
+      print(mylist);
+    }
+    notifyListeners();
+  }
+
+  var favorites = <WordPair>[];
+
+  void toggleFavorite() {
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
+    notifyListeners();
   }
 }
 
@@ -86,123 +61,262 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late WordPair current;
-  List<String> stringArray = [];
-  @override
-  void initState() {
-    super.initState();
-    current = WordPair.random(); // Initialize the random word pair
-  }
-
-  void generateRandomWordPair() {
-    setState(() {
-      current = WordPair.random(); // Generate and update the word pair
-    });
-  }
-
-  void _addItem(String newItem) {
-    if (newItem.isNotEmpty) {
-      setState(() {
-        stringArray.add(newItem);
-        print(newItem);
-      });
-    }
-  }
+  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    // ↓ Add this.
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.primary,
-    );
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = const GeneratorPage();
+        break;
+      case 1:
+        page = const FavoritesPage();
+        break;
+      case 2:
+        page = const Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
 
-    return Container(
-      // width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              // width: MediaQuery.of(context).size.width,
-              height: 200,
-              width: 200,
-              color: Colors.grey[300],
-              child: Expanded(
-                  child: ListView.builder(
-                itemCount: stringArray.length,
-                itemBuilder: (context, index) {
-                  return Align(
-                    alignment: Alignment.center,
-                    child: ListTile(
-                      title: Text(stringArray[index]),
-                    ),
-                  );
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        appBar: AppBar(
+          // backgroundColor: Colors.purple[100],
+          backgroundColor: Colors.purple[900],
+          title: const Text(
+            'Ian',
+            style: TextStyle(color: (Colors.white)),
+          ),
+
+          leading: IconButton(
+              color: Colors.white,
+              icon: const Icon(Icons.arrow_back),
+              tooltip: 'Back',
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          actions: <Widget>[
+            IconButton(
+                color: Colors.white,
+                icon: const Icon(Icons.home),
+                tooltip: 'Home',
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          ],
+        ),
+        body: Row(
+          children: [
+            SafeArea(
+              child: NavigationRail(
+                extended: constraints.maxWidth >= 600,
+                destinations: const [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.favorite),
+                    label: Text('Favorites'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.location_history),
+                    label: Text('sample 2'),
+                  ),
+                ],
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
                 },
-              )),
+              ),
             ),
-          ),
-          // Text("data"),
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: page, // ← Here.
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
 
-          const SizedBox(
-            height: 24,
-          ),
-          const Text('A random AWESOME ideas:'),
-          const SizedBox(
-            height: 24,
-          ),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(current.asLowerCase, style: style),
-            ),
-          ),
-          const SizedBox(
-            height: 12,
-          ),
+class GeneratorPage extends StatelessWidget {
+  const GeneratorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var pair = appState.current;
+
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
+
+    // Expanded(
+
+    //     child: ListView(
+
+    //   children: [
+    //     for (var pair in appState.mylist)
+    //       ListTile(
+    //         // leading: Icon(Icons.favorite),
+    //         title: Text(pair.asLowerCase),
+    //       ),
+    //   ],
+    // )),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair),
+          SizedBox(height: 10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite),
-                label: const Text('Like'),
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: Text('Like'),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
-                  _addItem(current.asPascalCase);
-                  generateRandomWordPair();
+                  appState.getNext();
                 },
-                child: const Text('next'),
+                child: Text('Next'),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-class Myfavorites extends StatefulWidget {
-  const Myfavorites({super.key});
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
 
-  @override
-  State<Myfavorites> createState() => _MyfavoritesState();
-}
+  final WordPair pair;
 
-class _MyfavoritesState extends State<Myfavorites> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: Colors.blue[100],
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('my favorites page')],
-      ),
+    final theme = Theme.of(context);
+
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+          padding: const EdgeInsets.all(40),
+          child: Text(
+            pair.asLowerCase,
+            style: style,
+            semanticsLabel: '${pair.first}${pair.second}',
+          )),
     );
   }
 }
+
+class FavoritesPage extends StatelessWidget {
+  const FavoritesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    if (appState.favorites.isEmpty) {
+      return const Center(
+        child: Text('No favorites yet.'),
+      );
+    }
+
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('You have '
+              '${appState.favorites.length} favorites:'),
+        ),
+        for (var pair in appState.favorites)
+          ListTile(
+            leading: IconButton(
+                icon: const Icon(Icons.delete),
+                tooltip: 'Back',
+                onPressed: () {
+                  appState.favorites.remove(pair);
+                }),
+            title: Text(pair.asLowerCase),
+          ),
+      ],
+    );
+  }
+}
+
+
+// Scaffold(
+//         appBar: AppBar(
+//           // backgroundColor: Colors.purple[100],
+//           title: const Text('Ian'),
+//           actions: <Widget>[
+//             IconButton(
+//                 icon: const Icon(Icons.home),
+//                 tooltip: 'Home',
+//                 onPressed: () {
+//                   Navigator.pop(context);
+//                 }),
+//           ],
+//         ),
+//         bottomNavigationBar: MediaQuery.of(context).size.width < 540
+//             ? BottomNavigationBar(
+//                 items: const [
+//                   BottomNavigationBarItem(
+//                       icon: Icon(Icons.home), label: "home"),
+//                   BottomNavigationBarItem(
+//                       icon: Icon(Icons.favorite), label: "favorite")
+//                 ],
+//                 currentIndex: _currentItem,
+//                 onTap: (value) {
+//                   setState(() {
+//                     _currentItem = value;
+//                   });
+//                 },
+//               )
+//             : null,
+//         body: Row(
+//           children: [
+//             if (MediaQuery.of(context).size.width >= 540)
+//               NavigationRail(
+//                 backgroundColor: Colors.purple[400],
+//                 destinations: const [
+//                   NavigationRailDestination(
+//                       icon: Icon(Icons.home), label: Text("home")),
+//                   NavigationRailDestination(
+//                       icon: Icon(Icons.favorite), label: Text("favorite")),
+//                 ],
+//                 selectedIndex: _currentItem,
+//                 onDestinationSelected: (int index) {
+//                   setState(() {
+//                     _currentItem = index;
+//                     // Handle navigation or other changes based on selectedIndex
+//                   });
+//                 },
+//               ),
+//             tabs[_currentItem],
+//           ],
+//         ));
+
