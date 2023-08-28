@@ -178,6 +178,17 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Center(
+            child: new ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(20.0),
+                children: [
+                  Center(
+                      child: ListTile(
+                    title: Text(pair.asLowerCase),
+                  )),
+                ]),
+          ),
           BigCard(pair: pair),
           SizedBox(height: 10),
           Row(
