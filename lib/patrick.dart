@@ -59,49 +59,44 @@ class _PatrickContainerState extends State<PatrickContainer> {
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
-
-
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-            appBar: AppBar(
-              title: const Text('Patrick'),
-              actions: <Widget>[
-                IconButton(
-                    icon: const Icon(Icons.home),
-                    tooltip: 'Home',
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text('Patrick'),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  tooltip: 'Home',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          ),
+          body: Row(children: [
+            SafeArea(
+                child: NavigationRail(
+              extended: constraints.maxWidth >= 600,
+              destinations: [
+                NavigationRailDestination(
+                    icon: Icon(Icons.home), label: Text('Home')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.favorite), label: Text('Favorites'))
               ],
-            ),
-            body: Row(children: [
-              SafeArea(
-                  child: NavigationRail(
-                extended: constraints.maxWidth >= 600,
-                destinations: [
-                  NavigationRailDestination(
-                      icon: Icon(Icons.home), label: Text('Home')),
-                  NavigationRailDestination(
-                      icon: Icon(Icons.favorite), label: Text('Favorites'))
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                  
-                },
-              )),
-              Expanded(
-                  child: Container(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      child: page))
-            ]));
-      }
-    );
+              selectedIndex: selectedIndex,
+              onDestinationSelected: (value) {
+                setState(() {
+                  selectedIndex = value;
+                });
+              },
+            )),
+            Expanded(
+                child: Container(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: page))
+          ]));
+    });
   }
 }
 
@@ -152,15 +147,19 @@ class GeneratorPage extends StatelessWidget {
 
 class FavoritesPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     var appState = context.watch<PatrickPageState>();
     var favorites = appState.favorites;
 
-    return ListView(children: [
-      Text('Favorites'),
-      for(var fav in favorites)
-        FavoriteChip(fav: fav), SizedBox(height: 10.0,),
-    ],);
+    return ListView(
+      children: [
+        Text('Favorites'),
+        for (var fav in favorites) FavoriteChip(fav: fav),
+        SizedBox(
+          height: 10.0,
+        ),
+      ],
+    );
   }
 }
 
