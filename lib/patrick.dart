@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/patrick-widgets/page3.dart';
 
 class PatrickPage extends StatelessWidget {
   const PatrickPage({super.key});
@@ -57,6 +58,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 1:
         page = FavoritesPage();
         break;
+      case 2:
+        page = BuildALayoutPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -82,7 +86,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
                 NavigationRailDestination(
                     icon: Icon(Icons.home), label: Text('Home')),
                 NavigationRailDestination(
-                    icon: Icon(Icons.favorite), label: Text('Favorites'))
+                    icon: Icon(Icons.favorite), label: Text('Favorites')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.build), label: Text('Build A Layout')),
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
