@@ -5,6 +5,7 @@ import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
 import 'package:your_first_app/patrick-widgets/page6.dart';
+import 'package:your_first_app/patrick-widgets/page7.dart';
 
 class PatrickPage extends StatelessWidget {
   const PatrickPage({super.key});
@@ -73,6 +74,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 5:
         page = GridListPage();
         break;
+      case 6:
+        page = LWDiffTypesPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -107,7 +111,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                     icon: Icon(Icons.horizontal_distribute),
                     label: Text('Horizontal List')),
                 NavigationRailDestination(
-                    icon: Icon(Icons.grid_3x3), label: Text('Grid List'))
+                    icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.view_list_outlined),
+                    label: Text('List with different types of Items')),
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
