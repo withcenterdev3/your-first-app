@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/main.dart';
 
 void main() {
   runApp(const JoshuaPage());
@@ -78,7 +79,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: const Icon(Icons.home),
                 tooltip: 'Home',
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MyApp()));
                 }),
           ],
         ),
