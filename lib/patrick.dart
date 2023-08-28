@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
+import 'package:your_first_app/patrick-widgets/page5.dart';
 
 class PatrickPage extends StatelessWidget {
   const PatrickPage({super.key});
@@ -65,6 +66,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 3:
         page = CreateAListViewPage();
         break;
+      case 4:
+        page = HorizontalListPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -95,6 +99,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
                     icon: Icon(Icons.build), label: Text('Build A Layout')),
                 NavigationRailDestination(
                     icon: Icon(Icons.list), label: Text('Create A List View')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.horizontal_distribute),
+                    label: Text('Horizontal List'))
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
