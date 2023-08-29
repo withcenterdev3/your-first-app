@@ -75,7 +75,13 @@ class _PatrickContainerState extends State<PatrickContainer> {
         page = GridListPage();
         break;
       case 6:
-        page = LWDiffTypesPage();
+        page = LWDiffTypesPage(
+          items: List<ListItem>.generate(
+              1000,
+              (index) => index % 6 == 0
+                  ? HeadingItem('Heading $index')
+                  : MessageItem('Sender $index', 'Message $index')),
+        );
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
