@@ -1,11 +1,14 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/patrick-widgets/page10.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
 import 'package:your_first_app/patrick-widgets/page6.dart';
 import 'package:your_first_app/patrick-widgets/page7.dart';
+import 'package:your_first_app/patrick-widgets/page8.dart';
+import 'package:your_first_app/patrick-widgets/page9.dart';
 
 class PatrickPage extends StatelessWidget {
   const PatrickPage({super.key});
@@ -75,7 +78,23 @@ class _PatrickContainerState extends State<PatrickContainer> {
         page = GridListPage();
         break;
       case 6:
-        page = LWDiffTypesPage();
+        page = LWDiffTypesPage(
+          items: List<ListItem>.generate(
+              1000,
+              (index) => index % 6 == 0
+                  ? HeadingItem('Heading $index')
+                  : MessageItem('Sender $index', 'Message $index')),
+        );
+        break;
+      case 7:
+        page = SpacedItemsPage();
+        break;
+      case 8:
+        page = SpacedItemsPage2();
+        break;
+      case 9:
+        page = LongListPage(
+            items: List<String>.generate(10000, (index) => 'Item $index'));
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -115,6 +134,12 @@ class _PatrickContainerState extends State<PatrickContainer> {
                 NavigationRailDestination(
                     icon: Icon(Icons.view_list_outlined),
                     label: Text('List with different types of Items')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.space_bar), label: Text('Spaced Items')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.space_bar), label: Text('Spaced Items 2')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.list_outlined), label: Text('Long List')),
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
