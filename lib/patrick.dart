@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_first_app/patrick-widgets/page10.dart';
+import 'package:your_first_app/patrick-widgets/page11.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -96,6 +97,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
         page = LongListPage(
             items: List<String>.generate(10000, (index) => 'Item $index'));
         break;
+      case 10:
+        page = Placeholder();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -140,6 +144,8 @@ class _PatrickContainerState extends State<PatrickContainer> {
                     icon: Icon(Icons.space_bar), label: Text('Spaced Items 2')),
                 NavigationRailDestination(
                     icon: Icon(Icons.list_outlined), label: Text('Long List')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.list_outlined), label: Text('Slivers')),
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
