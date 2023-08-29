@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ActivityPage4 extends StatefulWidget {
+class ActivityPage4 extends StatelessWidget {
   const ActivityPage4({super.key});
 
-  @override
-  State<ActivityPage4> createState() => _ActivityPage4State();
-}
-
-class _ActivityPage4State extends State<ActivityPage4> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +24,7 @@ class MyGrid extends StatelessWidget {
     return GridView.count(
       // Create a grid with 2 columns. If you change the scrollDirection to
       // horizontal, this produces 2 rows.
-      crossAxisCount: 2,
+      crossAxisCount: 4,
       // Generate 100 widgets that display their index in the List.
       children: List.generate(100, (index) {
         return Center(

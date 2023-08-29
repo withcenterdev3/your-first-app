@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
-import 'package:your_first_app/ian-widegets-pages/ActivityPage1.dart';
-import 'package:your_first_app/ian-widegets-pages/ActivityPage2.dart';
-import 'package:your_first_app/ian-widegets-pages/ActivityPage3.dart';
-import 'package:your_first_app/ian-widegets-pages/ActivityPage4.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage1.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage10.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage2.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage3.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage4.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage5.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage6.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage7.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage8.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage9.dart';
 import 'package:your_first_app/main.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -137,6 +143,24 @@ class _MyHomePageState extends State<MyHomePage> {
       case 5:
         page = const ActivityPage4();
         break;
+      case 6:
+        page = const ActivityPage5();
+        break;
+      case 7:
+        page = const ActivityPage6();
+        break;
+      case 8:
+        page = const ActivityPage7();
+        break;
+      case 9:
+        page = const ActivityPage8();
+        break;
+      case 10:
+        page = const ActivityPage9();
+        break;
+      case 11:
+        page = const ActivityPage10();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -184,23 +208,24 @@ class _MyHomePageState extends State<MyHomePage> {
           return Column(
             children: [
               Expanded(child: mainArea),
-              SafeArea(
-                  child: BottomNavigationBar(
-                items: const [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: 'home'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite), label: 'Favorites'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: 'activity 1')
-                ],
-                currentIndex: selectedIndex,
-                onTap: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
-              ))
+
+              // SafeArea(
+              //     child: BottomNavigationBar(
+              //   items: const [
+              //     BottomNavigationBarItem(
+              //         icon: Icon(Icons.home), label: 'home'),
+              //     BottomNavigationBarItem(
+              //         icon: Icon(Icons.favorite), label: 'Favorites'),
+              //     BottomNavigationBarItem(
+              //         icon: Icon(Icons.person), label: 'activity 1')
+              //   ],
+              //   currentIndex: selectedIndex,
+              //   onTap: (value) {
+              //     setState(() {
+              //       selectedIndex = value;
+              //     });
+              //   },
+              // ))
             ],
           );
         }
@@ -221,20 +246,44 @@ class _MyHomePageState extends State<MyHomePage> {
                       label: Text('Favorites'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.checklist),
                       label: Text('activity 1'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.checklist),
                       label: Text('activity 2'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.checklist),
                       label: Text('activity 3'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.checklist),
                       label: Text('activity 4'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 5'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 6'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 7'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 8'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 9'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 10'),
                     ),
                   ],
                   selectedIndex: selectedIndex,
@@ -248,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(child: mainArea),
             ],
           );
-        }
+        } //end of else
       }),
     );
   }
