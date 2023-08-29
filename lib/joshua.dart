@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
@@ -31,10 +29,14 @@ class JoshuaPage extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
   var favorites = <WordPair>[];
-  var myArr = <WordPair>[];
+  var history = <WordPair>[];
+
+  GlobalKey? historyListKey;
 
   void addWord() {
-    myArr.add(current);
+    history.insert(0, current);
+    var animatedList = historyListKey?.currentState as AnimatedListState?;
+    animatedList?.insertItem(0);
     notifyListeners();
   }
 
@@ -42,11 +44,12 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random();
   }
 
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
+  void toggleFavorite([WordPair? pair]) {
+    pair = pair ?? current;
+    if (favorites.contains(pair)) {
+      favorites.remove(pair);
     } else {
-      favorites.add(current);
+      favorites.add(pair);
     }
     notifyListeners();
   }
@@ -146,67 +149,99 @@ class GeneratorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
+
     IconData icon;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
     }
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            /*
-            * add a code here where it will add the pair variable as text
-            * with icon when the ElevatedButton for toggleFavorites() is triggered
-            */
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (var words in appState.myArr)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (appState.favorites.contains(words))
-                        const Icon(
-                          Icons.favorite,
-                        ),
-                      Text(words.toString()),
-                    ],
-                  ),
-              ],
-            ),
-            BigCard(pair: pair),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    appState.toggleFavorite();
-                  },
-                  icon: Icon(icon),
-                  label: const Text('Like'),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Expanded(
+            flex: 3,
+            child: HistoryListView(),
+          ),
+          const SizedBox(height: 10),
+          BigCard(pair: pair),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: const Text('Like'),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  appState.addWord();
+                  appState.getNext();
+                },
+                child: const Text('Next'),
+              ),
+            ],
+          ),
+          const Spacer(flex: 2),
+        ],
+      ),
+    );
+  }
+}
+
+class HistoryListView extends StatefulWidget {
+  const HistoryListView({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _HistoryListViewState();
+}
+
+class _HistoryListViewState extends State<HistoryListView> {
+  final _key = GlobalKey();
+
+  static const Gradient _maskingGradient = LinearGradient(
+      colors: [Colors.transparent, Colors.black],
+      stops: [0.0, 0.5],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter);
+
+  @override
+  Widget build(BuildContext context) {
+    final appState = context.watch<MyAppState>();
+    appState.historyListKey = _key;
+
+    return ShaderMask(
+      shaderCallback: (bounds) => _maskingGradient.createShader(bounds),
+      blendMode: BlendMode.dstIn,
+      child: AnimatedList(
+        key: _key,
+        reverse: true,
+        padding: const EdgeInsets.only(top: 100),
+        initialItemCount: appState.history.length,
+        itemBuilder: (context, index, animation) {
+          final pair = appState.history[index];
+          return SizeTransition(
+            sizeFactor: animation,
+            child: Center(
+                child: TextButton.icon(
                     onPressed: () {
-                      appState.addWord();
-                      appState.getNext();
+                      appState.toggleFavorite(pair);
                     },
-                    child: const Text('Next')),
-              ],
-            )
-          ],
-        ),
+                    icon: appState.favorites.contains(pair)
+                        ? const Icon(Icons.favorite, size: 12)
+                        : const SizedBox(),
+                    label: Text(
+                      pair.asLowerCase,
+                      semanticsLabel: pair.asPascalCase,
+                    ))),
+          );
+        },
       ),
     );
   }
@@ -232,10 +267,17 @@ class BigCard extends StatelessWidget {
       color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(
-          pair.asLowerCase,
-          style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
+        child: AnimatedSize(
+          duration: const Duration(milliseconds: 200),
+          child: MergeSemantics(
+              child: Wrap(
+            children: [
+              Text(pair.first,
+                  style: style.copyWith(fontWeight: FontWeight.w200)),
+              Text(pair.second,
+                  style: style.copyWith(fontWeight: FontWeight.bold)),
+            ],
+          )),
         ),
       ),
     );
@@ -256,29 +298,33 @@ class FavoritesPage extends StatelessWidget {
       );
     }
 
-    return ListView(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
           child: Text('You have '
               '${appState.favorites.length} favorites:'),
         ),
-        for (var pair in appState.favorites)
-          // ListTile(
-          //   leading: const Icon(Icons.favorite),
-          //   title: Text(pair.asLowerCase),
-          // ),
-          Row(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.delete),
-                  tooltip: 'Remove from favorites',
-                  onPressed: () {
-                    appState.removeFavorite(pair);
-                  }),
-              Text(pair.asLowerCase)
-            ],
-          )
+        Expanded(
+            child: GridView(
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 400, childAspectRatio: 400 / 80),
+          children: [
+            for (var pair in appState.favorites)
+              ListTile(
+                  leading: IconButton(
+                      icon: const Icon(Icons.delete_outlined),
+                      tooltip: 'Remove from favorites',
+                      onPressed: () {
+                        appState.removeFavorite(pair);
+                      }),
+                  title: Text(
+                    pair.asLowerCase,
+                    semanticsLabel: pair.asPascalCase,
+                  ))
+          ],
+        )),
       ],
     );
   }
