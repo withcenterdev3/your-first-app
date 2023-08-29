@@ -119,40 +119,54 @@ class _PatrickContainerState extends State<PatrickContainer> {
           ),
           body: Row(children: [
             SafeArea(
-                child: NavigationRail(
-              extended: constraints.maxWidth >= 600,
-              destinations: [
-                NavigationRailDestination(
-                    icon: Icon(Icons.home), label: Text('Home')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.favorite), label: Text('Favorites')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.build), label: Text('Build A Layout')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.list), label: Text('Create A List View')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.horizontal_distribute),
-                    label: Text('Horizontal List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.view_list_outlined),
-                    label: Text('List with different types of Items')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.space_bar), label: Text('Spaced Items')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.space_bar), label: Text('Spaced Items 2')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.list_outlined), label: Text('Long List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.list_outlined), label: Text('Slivers')),
-              ],
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+                child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height),
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    extended: constraints.maxWidth >= 600,
+                    destinations: [
+                      NavigationRailDestination(
+                          icon: Icon(Icons.home), label: Text('Home')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.favorite), label: Text('Favorites')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.build),
+                          label: Text('Build A Layout')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.list),
+                          label: Text('Create A List View')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.horizontal_distribute),
+                          label: Text('Horizontal List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.view_list_outlined),
+                          label: Text('List with different types of Items')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.space_bar),
+                          label: Text('Spaced Items')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.space_bar),
+                          label: Text('Spaced Items 2')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.list_outlined),
+                          label: Text('Long List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.list_outlined),
+                          label: Text('Slivers')),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
             )),
             Expanded(
                 child: Container(
