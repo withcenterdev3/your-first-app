@@ -2,6 +2,9 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_first_app/patrick-widgets/page10.dart';
+import 'package:your_first_app/patrick-widgets/page11.dart';
+import 'package:your_first_app/patrick-widgets/page12.dart';
+import 'package:your_first_app/patrick-widgets/page13.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -96,6 +99,15 @@ class _PatrickContainerState extends State<PatrickContainer> {
         page = LongListPage(
             items: List<String>.generate(10000, (index) => 'Item $index'));
         break;
+      case 10:
+        page = HorizonsPage();
+        break;
+      case 11:
+        page = FloatingAppPage();
+        break;
+      case 12:
+        page = ParallaxPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -115,38 +127,60 @@ class _PatrickContainerState extends State<PatrickContainer> {
           ),
           body: Row(children: [
             SafeArea(
-                child: NavigationRail(
-              extended: constraints.maxWidth >= 600,
-              destinations: [
-                NavigationRailDestination(
-                    icon: Icon(Icons.home), label: Text('Home')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.favorite), label: Text('Favorites')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.build), label: Text('Build A Layout')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.list), label: Text('Create A List View')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.horizontal_distribute),
-                    label: Text('Horizontal List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.view_list_outlined),
-                    label: Text('List with different types of Items')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.space_bar), label: Text('Spaced Items')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.space_bar), label: Text('Spaced Items 2')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.list_outlined), label: Text('Long List')),
-              ],
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+                child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height),
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    extended: constraints.maxWidth >= 600,
+                    destinations: [
+                      NavigationRailDestination(
+                          icon: Icon(Icons.home), label: Text('Home')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.favorite), label: Text('Favorites')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.build),
+                          label: Text('Build A Layout')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.list),
+                          label: Text('Create A List View')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.horizontal_distribute),
+                          label: Text('Horizontal List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.view_list_outlined),
+                          label: Text('List with different types of Items')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.space_bar),
+                          label: Text('Spaced Items')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.space_bar),
+                          label: Text('Spaced Items 2')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.list_outlined),
+                          label: Text('Long List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.list_outlined),
+                          label: Text('Slivers')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.flag_circle_outlined),
+                          label: Text('Floating app')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.access_alarms_sharp),
+                          label: Text('Parallax'))
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
             )),
             Expanded(
                 child: Container(
