@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
 import 'package:your_first_app/main.dart';
-import 'JoshuaWidgets/differentTypesJJC/difflisttypes.dart';
+import 'joshuawidgets/difflisttypesjjc.dart';
+import 'joshuawidgets/layoutjjc.dart';
+import 'joshuawidgets/listviewjjc.dart';
+import 'joshuawidgets/horizontallistjjc.dart';
+import 'joshuawidgets/gridlistjjc.dart';
 
-//TODO: hiwalay hiwalayin sa magkakaibang folder bawat class (refer to switch)
-// folder name : [task]+initial ex. layoutJJ
 void main() {
   runApp(const JoshuaPage());
 }
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const MyListView();
         break;
       case 4:
-        page = const HorizonalList();
+        page = const HorizontalList();
         break;
       case 5:
         page = const MyGridView();
@@ -364,236 +366,6 @@ class FavoritesPage extends StatelessWidget {
           ],
         )),
       ],
-    );
-  }
-}
-
-// layout tab, index = 2
-class MyLayout extends StatefulWidget {
-  const MyLayout({super.key});
-
-  @override
-  State<MyLayout> createState() => _MyLayoutState();
-}
-
-class _MyLayoutState extends State<MyLayout> {
-  Widget titleSection = Container(
-    padding: const EdgeInsets.all(32),
-    child: Row(children: [
-      Expanded(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: const Text(
-              'Oeschinen Lake Campground',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          Text(
-            'Kandersteg, Switzerland',
-            style: TextStyle(color: Colors.grey[500]),
-          )
-        ],
-      )),
-      Icon(
-        Icons.star,
-        color: Colors.red[500],
-      ),
-      const Text('41'),
-    ]),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    Color color = Theme.of(context).primaryColor;
-    /**
-     * Button Section Call, Route, Share
-    */
-    Widget buttonSection = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildButtonColumn(color, Icons.call, 'CALL'),
-        _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
-        _buildButtonColumn(color, Icons.share, 'SHARE')
-      ],
-    );
-    // Text Section; from the bottom
-    Widget textSection = Container(
-        padding: const EdgeInsets.all(32),
-        child: const Text(
-          'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-          'Alps. Situated 1,578 meters above sea level, it is one of the '
-          'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-          'half-hour walk through pastures and pine forest, leads you to the '
-          'lake, which warms to 20 degrees Celsius in the summer. Activities '
-          'enjoyed here include rowing, and riding the summer toboggan run.',
-          softWrap: true,
-        ));
-
-    return MaterialApp(
-      title: 'Flutter Layout Demo',
-      home: Scaffold(
-        body: ListView(
-          children: [
-            Image.asset(
-              'assets/lake.jpeg',
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            titleSection,
-            buttonSection,
-            textSection,
-          ],
-        ),
-      ),
-    );
-  }
-
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: color,
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class MyListView extends StatefulWidget {
-  const MyListView({super.key});
-
-  @override
-  State<MyListView> createState() => _MyListViewState();
-}
-
-class _MyListViewState extends State<MyListView> {
-  @override
-  Widget build(BuildContext context) {
-    const title = 'Basic List';
-
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(title),
-        ),
-        body: ListView(
-          children: const <Widget>[
-            ListTile(
-              leading: Icon(Icons.map),
-              title: Text('Map'),
-            ),
-            ListTile(
-              leading: Icon(Icons.album),
-              title: Text('Álbum'),
-            ),
-            ListTile(
-              leading: Icon(Icons.phone),
-              title: Text('Phone'),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HorizonalList extends StatefulWidget {
-  const HorizonalList({super.key});
-
-  @override
-  State<HorizonalList> createState() => _HorizonalListState();
-}
-
-class _HorizonalListState extends State<HorizonalList> {
-  @override
-  Widget build(BuildContext context) {
-    const title = 'Horizontal List';
-
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text(title),
-          ),
-          body: Container(
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                Container(
-                  width: 160,
-                  color: Colors.red,
-                ),
-                Container(
-                  width: 160,
-                  color: Colors.blue,
-                ),
-                Container(
-                  width: 160,
-                  color: Colors.green,
-                ),
-                Container(
-                  width: 160,
-                  color: Colors.yellow,
-                ),
-                Container(
-                  width: 160,
-                  color: Colors.orange,
-                )
-              ],
-            ),
-          )),
-    );
-  }
-}
-
-class MyGridView extends StatefulWidget {
-  const MyGridView({super.key});
-
-  @override
-  State<MyGridView> createState() => _MyGridViewState();
-}
-
-class _MyGridViewState extends State<MyGridView> {
-  @override
-  Widget build(BuildContext context) {
-    const title = 'Grid List';
-
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(title),
-        ),
-        body: GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(100, (index) {
-            return Center(
-              child: Text(
-                'Item $index',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            );
-          }),
-        ),
-      ),
     );
   }
 }
