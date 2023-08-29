@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
@@ -28,13 +30,17 @@ class JoshuaPage extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
+  var favorites = <WordPair>[];
+  var myArr = <WordPair>[];
 
-  void getNext() {
-    current = WordPair.random();
+  void addWord() {
+    myArr.add(current);
     notifyListeners();
   }
 
-  var favorites = <WordPair>[];
+  void getNext() {
+    current = WordPair.random();
+  }
 
   void toggleFavorite() {
     if (favorites.contains(current)) {
@@ -42,6 +48,11 @@ class MyAppState extends ChangeNotifier {
     } else {
       favorites.add(current);
     }
+    notifyListeners();
+  }
+
+  void removeFavorite(word) {
+    favorites.remove(word);
     notifyListeners();
   }
 }
@@ -135,7 +146,6 @@ class GeneratorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
-
     IconData icon;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
@@ -147,7 +157,26 @@ class GeneratorPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('A Random AWESOME idea'),
+            /*
+            * add a code here where it will add the pair variable as text
+            * with icon when the ElevatedButton for toggleFavorites() is triggered
+            */
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (var words in appState.myArr)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (appState.favorites.contains(words))
+                        const Icon(
+                          Icons.favorite,
+                        ),
+                      Text(words.toString()),
+                    ],
+                  ),
+              ],
+            ),
             BigCard(pair: pair),
             const SizedBox(
               height: 10,
@@ -170,9 +199,10 @@ class GeneratorPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
+                      appState.addWord();
                       appState.getNext();
                     },
-                    child: const Text('NEXT')),
+                    child: const Text('Next')),
               ],
             )
           ],
@@ -234,10 +264,21 @@ class FavoritesPage extends StatelessWidget {
               '${appState.favorites.length} favorites:'),
         ),
         for (var pair in appState.favorites)
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.favorite),
+          //   title: Text(pair.asLowerCase),
+          // ),
+          Row(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.delete),
+                  tooltip: 'Remove from favorites',
+                  onPressed: () {
+                    appState.removeFavorite(pair);
+                  }),
+              Text(pair.asLowerCase)
+            ],
+          )
       ],
     );
   }
