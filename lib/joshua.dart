@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
 import 'package:your_first_app/main.dart';
+import 'JoshuaWidgets/differentTypesJJC/difflisttypes.dart';
 
+//TODO: hiwalay hiwalayin sa magkakaibang folder bawat class (refer to switch)
+// folder name : [task]+initial ex. layoutJJ
 void main() {
   runApp(const JoshuaPage());
 }
@@ -18,8 +21,7 @@ class JoshuaPage extends StatelessWidget {
         title: 'Name App',
         theme: ThemeData(
             useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color.fromARGB(255, 95, 151, 109))),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange)),
         home: const MyHomePage(),
       ),
     );
@@ -83,6 +85,26 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 2:
         page = const MyLayout();
+        break;
+      case 3:
+        page = const MyListView();
+        break;
+      case 4:
+        page = const HorizonalList();
+        break;
+      case 5:
+        page = const MyGridView();
+        break;
+      case 6:
+        page = DiffList(
+          items: List<ListItem>.generate(
+            1000,
+            (i) => i % 6 == 0
+                ? HeadingItem('Heading $i')
+                : MessageItem('Sender $i', 'Message Body $i'),
+          ),
+        );
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -118,6 +140,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   NavigationRailDestination(
                     icon: Icon(Icons.image),
                     label: Text('Layout'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.list),
+                    label: Text('List View'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.compare_arrows_outlined),
+                    label: Text('Horizontal List'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.grid_4x4),
+                    label: Text('Grid List'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.message),
+                    label: Text('Mixed List'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
@@ -432,6 +470,130 @@ class _MyLayoutState extends State<MyLayout> {
           ),
         )
       ],
+    );
+  }
+}
+
+class MyListView extends StatefulWidget {
+  const MyListView({super.key});
+
+  @override
+  State<MyListView> createState() => _MyListViewState();
+}
+
+class _MyListViewState extends State<MyListView> {
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Basic List';
+
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(title),
+        ),
+        body: ListView(
+          children: const <Widget>[
+            ListTile(
+              leading: Icon(Icons.map),
+              title: Text('Map'),
+            ),
+            ListTile(
+              leading: Icon(Icons.album),
+              title: Text('Álbum'),
+            ),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('Phone'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HorizonalList extends StatefulWidget {
+  const HorizonalList({super.key});
+
+  @override
+  State<HorizonalList> createState() => _HorizonalListState();
+}
+
+class _HorizonalListState extends State<HorizonalList> {
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Horizontal List';
+
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text(title),
+          ),
+          body: Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            height: 200,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                Container(
+                  width: 160,
+                  color: Colors.red,
+                ),
+                Container(
+                  width: 160,
+                  color: Colors.blue,
+                ),
+                Container(
+                  width: 160,
+                  color: Colors.green,
+                ),
+                Container(
+                  width: 160,
+                  color: Colors.yellow,
+                ),
+                Container(
+                  width: 160,
+                  color: Colors.orange,
+                )
+              ],
+            ),
+          )),
+    );
+  }
+}
+
+class MyGridView extends StatefulWidget {
+  const MyGridView({super.key});
+
+  @override
+  State<MyGridView> createState() => _MyGridViewState();
+}
+
+class _MyGridViewState extends State<MyGridView> {
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Grid List';
+
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(title),
+        ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: List.generate(100, (index) {
+            return Center(
+              child: Text(
+                'Item $index',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            );
+          }),
+        ),
+      ),
     );
   }
 }
