@@ -1,6 +1,11 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/patrick-widgets/page3.dart';
+import 'package:your_first_app/patrick-widgets/page4.dart';
+import 'package:your_first_app/patrick-widgets/page5.dart';
+import 'package:your_first_app/patrick-widgets/page6.dart';
+import 'package:your_first_app/patrick-widgets/page7.dart';
 
 class PatrickPage extends StatelessWidget {
   const PatrickPage({super.key});
@@ -57,51 +62,73 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 1:
         page = FavoritesPage();
         break;
+      case 2:
+        page = BuildALayoutPage();
+        break;
+      case 3:
+        page = CreateAListViewPage();
+        break;
+      case 4:
+        page = HorizontalListPage();
+        break;
+      case 5:
+        page = GridListPage();
+        break;
+      case 6:
+        page = LWDiffTypesPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
-
-
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-            appBar: AppBar(
-              title: const Text('Patrick'),
-              actions: <Widget>[
-                IconButton(
-                    icon: const Icon(Icons.home),
-                    tooltip: 'Home',
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text('Patrick'),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  tooltip: 'Home',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          ),
+          body: Row(children: [
+            SafeArea(
+                child: NavigationRail(
+              extended: constraints.maxWidth >= 600,
+              destinations: [
+                NavigationRailDestination(
+                    icon: Icon(Icons.home), label: Text('Home')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.favorite), label: Text('Favorites')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.build), label: Text('Build A Layout')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.list), label: Text('Create A List View')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.horizontal_distribute),
+                    label: Text('Horizontal List')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.view_list_outlined),
+                    label: Text('List with different types of Items')),
               ],
-            ),
-            body: Row(children: [
-              SafeArea(
-                  child: NavigationRail(
-                extended: constraints.maxWidth >= 600,
-                destinations: [
-                  NavigationRailDestination(
-                      icon: Icon(Icons.home), label: Text('Home')),
-                  NavigationRailDestination(
-                      icon: Icon(Icons.favorite), label: Text('Favorites'))
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                  
-                },
-              )),
-              Expanded(
-                  child: Container(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      child: page))
-            ]));
-      }
-    );
+              selectedIndex: selectedIndex,
+              onDestinationSelected: (value) {
+                setState(() {
+                  selectedIndex = value;
+                });
+              },
+            )),
+            Expanded(
+                child: Container(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: page))
+          ]));
+    });
   }
 }
 
@@ -152,15 +179,19 @@ class GeneratorPage extends StatelessWidget {
 
 class FavoritesPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     var appState = context.watch<PatrickPageState>();
     var favorites = appState.favorites;
 
-    return ListView(children: [
-      Text('Favorites'),
-      for(var fav in favorites)
-        FavoriteChip(fav: fav), SizedBox(height: 10.0,),
-    ],);
+    return ListView(
+      children: [
+        Text('Favorites'),
+        for (var fav in favorites) FavoriteChip(fav: fav),
+        SizedBox(
+          height: 10.0,
+        ),
+      ],
+    );
   }
 }
 
