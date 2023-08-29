@@ -6,6 +6,7 @@ import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
 import 'package:your_first_app/patrick-widgets/page6.dart';
 import 'package:your_first_app/patrick-widgets/page7.dart';
+import 'package:your_first_app/patrick-widgets/page8.dart';
 
 class PatrickPage extends StatelessWidget {
   const PatrickPage({super.key});
@@ -83,6 +84,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
                   : MessageItem('Sender $index', 'Message $index')),
         );
         break;
+      case 7:
+        page = SpacedItemsPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -121,6 +125,8 @@ class _PatrickContainerState extends State<PatrickContainer> {
                 NavigationRailDestination(
                     icon: Icon(Icons.view_list_outlined),
                     label: Text('List with different types of Items')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.space_bar), label: Text('Spaced Items')),
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
