@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_first_app/patrick-widgets/page10.dart';
 import 'package:your_first_app/patrick-widgets/page11.dart';
+import 'package:your_first_app/patrick-widgets/page12.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -100,6 +101,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 10:
         page = Placeholder();
         break;
+      case 11:
+        page = FloatingAppPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -157,6 +161,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
                       NavigationRailDestination(
                           icon: Icon(Icons.list_outlined),
                           label: Text('Slivers')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.flag_circle_outlined),
+                          label: Text('Floating app'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
