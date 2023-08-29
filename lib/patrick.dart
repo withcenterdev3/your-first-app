@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:your_first_app/patrick-widgets/page10.dart';
 import 'package:your_first_app/patrick-widgets/page11.dart';
 import 'package:your_first_app/patrick-widgets/page12.dart';
+import 'package:your_first_app/patrick-widgets/page13.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -99,10 +100,13 @@ class _PatrickContainerState extends State<PatrickContainer> {
             items: List<String>.generate(10000, (index) => 'Item $index'));
         break;
       case 10:
-        page = Placeholder();
+        page = HorizonsPage();
         break;
       case 11:
         page = FloatingAppPage();
+        break;
+      case 12:
+        page = ParallaxPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -163,7 +167,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Slivers')),
                       NavigationRailDestination(
                           icon: Icon(Icons.flag_circle_outlined),
-                          label: Text('Floating app'))
+                          label: Text('Floating app')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.access_alarms_sharp),
+                          label: Text('Parallax'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
