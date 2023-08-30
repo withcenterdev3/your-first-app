@@ -7,6 +7,8 @@ import 'joshuawidgets/layoutjjc.dart';
 import 'joshuawidgets/listviewjjc.dart';
 import 'joshuawidgets/horizontallistjjc.dart';
 import 'joshuawidgets/gridlistjjc.dart';
+import 'joshuawidgets/spacedlistjjc.dart';
+import 'joshuawidgets/longlistjjc.dart';
 
 void main() {
   runApp(const JoshuaPage());
@@ -107,6 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
         break;
+      case 7:
+        page = const SpacedList();
+        break;
+      case 8:
+        page = const LongList();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -158,6 +166,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   NavigationRailDestination(
                     icon: Icon(Icons.message),
                     label: Text('Mixed List'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.space_bar),
+                    label: Text('Spaced List'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.arrow_downward),
+                    label: Text('Long List'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
