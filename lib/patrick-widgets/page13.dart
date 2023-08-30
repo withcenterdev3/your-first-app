@@ -187,7 +187,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
   bool shouldRepaint(ParallaxFlowDelegate oldDelegate) {
     return scrollable != oldDelegate.scrollable ||
         listItemContext != oldDelegate.listItemContext ||
-        backgroundImageKey != oldDelegate.listItemContext;
+        backgroundImageKey != oldDelegate.backgroundImageKey;
   }
 }
 
@@ -207,7 +207,7 @@ class Parallax extends SingleChildRenderObjectWidget {
   }
 }
 
-class ParallaxParentData extends ContainerBoxParentData<RendexBox> {}
+class ParallaxParentData extends ContainerBoxParentData<RenderBox> {}
 
 class RenderParallax extends RenderBox
     with RenderObjectWithChildMixin<RenderBox>, RenderProxyBoxMixin {

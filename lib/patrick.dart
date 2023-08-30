@@ -5,6 +5,7 @@ import 'package:your_first_app/patrick-widgets/page10.dart';
 import 'package:your_first_app/patrick-widgets/page11.dart';
 import 'package:your_first_app/patrick-widgets/page12.dart';
 import 'package:your_first_app/patrick-widgets/page13.dart';
+import 'package:your_first_app/patrick-widgets/page14.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -23,8 +24,12 @@ class PatrickPage extends StatelessWidget {
         child: MaterialApp(
           title: 'Namer App',
           theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+            // textTheme: TextTheme(
+            //     displayLarge:
+            //         TextStyle(fontSize: 72, fontWeight: FontWeight.bold))
+          ),
           home: PatrickContainer(),
         ));
   }
@@ -108,6 +113,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 12:
         page = ParallaxPage();
         break;
+      case 13:
+        page = ThemePage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -170,7 +178,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Floating app')),
                       NavigationRailDestination(
                           icon: Icon(Icons.access_alarms_sharp),
-                          label: Text('Parallax'))
+                          label: Text('Parallax')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.access_alarms), label: Text('Theme'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
