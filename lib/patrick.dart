@@ -6,6 +6,7 @@ import 'package:your_first_app/patrick-widgets/page11.dart';
 import 'package:your_first_app/patrick-widgets/page12.dart';
 import 'package:your_first_app/patrick-widgets/page13.dart';
 import 'package:your_first_app/patrick-widgets/page14.dart';
+import 'package:your_first_app/patrick-widgets/page15.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -116,6 +117,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 13:
         page = ThemePage();
         break;
+      case 14:
+        page = MySeasonalThemePage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -180,7 +184,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           icon: Icon(Icons.access_alarms_sharp),
                           label: Text('Parallax')),
                       NavigationRailDestination(
-                          icon: Icon(Icons.access_alarms), label: Text('Theme'))
+                          icon: Icon(Icons.light_mode), label: Text('Theme')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.sunny),
+                          label: Text('Seasonal Themeing'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
