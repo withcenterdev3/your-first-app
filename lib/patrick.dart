@@ -8,6 +8,7 @@ import 'package:your_first_app/patrick-widgets/page13.dart';
 import 'package:your_first_app/patrick-widgets/page14.dart';
 import 'package:your_first_app/patrick-widgets/page15.dart';
 import 'package:your_first_app/patrick-widgets/page16.dart';
+import 'package:your_first_app/patrick-widgets/page17.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -124,6 +125,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 15:
         page = LayoutGridPage();
         break;
+      case 16:
+        page = GoogleFontsPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -194,7 +198,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Seasonal Themeing')),
                       NavigationRailDestination(
                           icon: Icon(Icons.ac_unit_sharp),
-                          label: Text('Layout Grid'))
+                          label: Text('Layout Grid')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.font_download),
+                          label: Text('Google Fonts'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
