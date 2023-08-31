@@ -10,6 +10,9 @@ import 'package:your_first_app/patrick-widgets/page15.dart';
 import 'package:your_first_app/patrick-widgets/page16.dart';
 import 'package:your_first_app/patrick-widgets/page17.dart';
 import 'package:your_first_app/patrick-widgets/page18.dart';
+import 'package:your_first_app/patrick-widgets/page19.dart';
+import 'package:your_first_app/patrick-widgets/page20.dart';
+import 'package:your_first_app/patrick-widgets/page21.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -132,6 +135,15 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 17:
         page = LayoutContraintsPage();
         break;
+      case 18:
+        page = InteractiveViewLocationPage();
+        break;
+      case 19:
+        page = GestureDemoPage();
+        break;
+      case 20:
+        page = InkWellDemoPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -207,7 +219,16 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Google Fonts')),
                       NavigationRailDestination(
                           icon: Icon(Icons.layers_outlined),
-                          label: Text('Constraints'))
+                          label: Text('Constraints')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.location_on),
+                          label: Text('Interactive App')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.gesture),
+                          label: Text('Gesture Demo')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.water_drop),
+                          label: Text('InkWell demo'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
