@@ -1,6 +1,22 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/patrick-widgets/page10.dart';
+import 'package:your_first_app/patrick-widgets/page11.dart';
+import 'package:your_first_app/patrick-widgets/page12.dart';
+import 'package:your_first_app/patrick-widgets/page13.dart';
+import 'package:your_first_app/patrick-widgets/page14.dart';
+import 'package:your_first_app/patrick-widgets/page15.dart';
+import 'package:your_first_app/patrick-widgets/page16.dart';
+import 'package:your_first_app/patrick-widgets/page17.dart';
+import 'package:your_first_app/patrick-widgets/page18.dart';
+import 'package:your_first_app/patrick-widgets/page19.dart';
+import 'package:your_first_app/patrick-widgets/page20.dart';
+import 'package:your_first_app/patrick-widgets/page21.dart';
+import 'package:your_first_app/patrick-widgets/page22.dart';
+import 'package:your_first_app/patrick-widgets/page23.dart';
+import 'package:your_first_app/patrick-widgets/page24.dart';
+import 'package:your_first_app/patrick-widgets/page25.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -19,12 +35,6 @@ class PatrickPage extends StatelessWidget {
         child: MaterialApp(
           title: 'Namer App',
           theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-            // textTheme: TextTheme(
-            //     displayLarge:
-            //         TextStyle(fontSize: 72, fontWeight: FontWeight.bold))
-          ),
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
             // textTheme: TextTheme(
@@ -87,7 +97,68 @@ class _PatrickContainerState extends State<PatrickContainer> {
         page = GridListPage();
         break;
       case 6:
-        page = LWDiffTypesPage();
+        page = LWDiffTypesPage(
+          items: List<ListItem>.generate(
+              1000,
+              (index) => index % 6 == 0
+                  ? HeadingItem('Heading $index')
+                  : MessageItem('Sender $index', 'Message $index')),
+        );
+        break;
+      case 7:
+        page = SpacedItemsPage();
+        break;
+      case 8:
+        page = SpacedItemsPage2();
+        break;
+      case 9:
+        page = LongListPage(
+            items: List<String>.generate(10000, (index) => 'Item $index'));
+        break;
+      case 10:
+        page = HorizonsPage();
+        break;
+      case 11:
+        page = FloatingAppPage();
+        break;
+      case 12:
+        page = ParallaxPage();
+        break;
+      case 13:
+        page = ThemePage();
+        break;
+      case 14:
+        page = MySeasonalThemePage();
+        break;
+      case 15:
+        page = LayoutGridPage();
+        break;
+      case 16:
+        page = GoogleFontsPage();
+        break;
+      case 17:
+        page = LayoutContraintsPage();
+        break;
+      case 18:
+        page = InteractiveViewLocationPage();
+        break;
+      case 19:
+        page = GestureDemoPage();
+        break;
+      case 20:
+        page = InkWellDemoPage();
+        break;
+      case 21:
+        page = ExampleDragAndDropPage();
+        break;
+      case 22:
+        page = SwipeToDismissDemoPage();
+        break;
+      case 23:
+        page = TextFieldDemoPage();
+        break;
+      case 24:
+        page = TextFieldChangeHandlingPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -108,32 +179,94 @@ class _PatrickContainerState extends State<PatrickContainer> {
           ),
           body: Row(children: [
             SafeArea(
-                child: NavigationRail(
-              extended: constraints.maxWidth >= 600,
-              destinations: [
-                NavigationRailDestination(
-                    icon: Icon(Icons.home), label: Text('Home')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.favorite), label: Text('Favorites')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.build), label: Text('Build A Layout')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.list), label: Text('Create A List View')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.horizontal_distribute),
-                    label: Text('Horizontal List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
-                NavigationRailDestination(
-                    icon: Icon(Icons.view_list_outlined),
-                    label: Text('List with different types of Items')),
-              ],
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+                child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height),
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    extended: constraints.maxWidth >= 600,
+                    destinations: [
+                      NavigationRailDestination(
+                          icon: Icon(Icons.home), label: Text('Home')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.favorite), label: Text('Favorites')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.build),
+                          label: Text('Build A Layout')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.swipe_down),
+                          label: Text('Create A List View')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.swipe_left),
+                          label: Text('Horizontal List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.view_list_outlined),
+                          label: Text('List with different types of Items')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.speaker_notes),
+                          label: Text('Spaced Items')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.space_bar),
+                          label: Text('Spaced Items 2')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.article), label: Text('Long List')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.linear_scale_sharp),
+                          label: Text('Slivers')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.flag_circle_outlined),
+                          label: Text('Floating app')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.access_alarms_sharp),
+                          label: Text('Parallax')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.light_mode), label: Text('Theme')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.sunny),
+                          label: Text('Seasonal Themeing')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.ac_unit_sharp),
+                          label: Text('Layout Grid')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.font_download),
+                          label: Text('Google Fonts')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.layers_outlined),
+                          label: Text('Constraints')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.location_on),
+                          label: Text('Interactive App')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.gesture),
+                          label: Text('Gesture Demo')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.water_drop),
+                          label: Text('InkWell demo')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.highlight_alt),
+                          label: Text('Draggable Demo')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.expand_more),
+                          label: Text('Swipe to Dismiss')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.edit),
+                          label: Text('Textfield demo')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.drive_file_rename_outline),
+                          label: Text('Handling Changes'))
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
             )),
             Expanded(
                 child: Container(
