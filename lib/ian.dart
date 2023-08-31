@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage1.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage10.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage2.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage3.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage4.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage5.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage6.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage7.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage8.dart';
+import 'package:your_first_app/ian-widgets.pages/ActivityPage9.dart';
 import 'package:your_first_app/main.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -122,7 +132,34 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const FavoritesPage();
         break;
       case 2:
-        page = const SecondActivtyPage();
+        page = const ActivityPage1();
+        break;
+      case 3:
+        page = const ActivityPage2();
+        break;
+      case 4:
+        page = const ActivityPage3();
+        break;
+      case 5:
+        page = const ActivityPage4();
+        break;
+      case 6:
+        page = const ActivityPage5();
+        break;
+      case 7:
+        page = const ActivityPage6();
+        break;
+      case 8:
+        page = const ActivityPage7();
+        break;
+      case 9:
+        page = const ActivityPage8();
+        break;
+      case 10:
+        page = const ActivityPage9();
+        break;
+      case 11:
+        page = const ActivityPage10();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -171,23 +208,24 @@ class _MyHomePageState extends State<MyHomePage> {
           return Column(
             children: [
               Expanded(child: mainArea),
-              SafeArea(
-                  child: BottomNavigationBar(
-                items: const [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: 'home'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite), label: 'Favorites'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: 'activity 2')
-                ],
-                currentIndex: selectedIndex,
-                onTap: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
-              ))
+
+              // SafeArea(
+              //     child: BottomNavigationBar(
+              //   items: const [
+              //     BottomNavigationBarItem(
+              //         icon: Icon(Icons.home), label: 'home'),
+              //     BottomNavigationBarItem(
+              //         icon: Icon(Icons.favorite), label: 'Favorites'),
+              //     BottomNavigationBarItem(
+              //         icon: Icon(Icons.person), label: 'activity 1')
+              //   ],
+              //   currentIndex: selectedIndex,
+              //   onTap: (value) {
+              //     setState(() {
+              //       selectedIndex = value;
+              //     });
+              //   },
+              // ))
             ],
           );
         }
@@ -208,8 +246,44 @@ class _MyHomePageState extends State<MyHomePage> {
                       label: Text('Favorites'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 1'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
                       label: Text('activity 2'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 3'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 4'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 5'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 6'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 7'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 8'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 9'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text('activity 10'),
                     ),
                   ],
                   selectedIndex: selectedIndex,
@@ -223,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(child: mainArea),
             ],
           );
-        }
+        } //end of else
       }),
     );
   }
@@ -410,60 +484,6 @@ class _HistoryListViewState extends State<HistoryListView> {
               ),
             );
           }),
-    );
-  }
-}
-
-class SecondActivtyPage extends StatelessWidget {
-  const SecondActivtyPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Widget titleSection = Container(
-      padding: const EdgeInsets.all(32),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: const Text(
-                    'Oeschinen Lake Campground',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Text(
-                  'Kandersteg, Switzerland',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          const Text('41'),
-        ],
-      ),
-    );
-
-    return ListView(
-      children: [
-        Image.asset(
-          'images/lake.jpg',
-          width: 600,
-          height: 240,
-          fit: BoxFit.cover,
-        ),
-        titleSection
-      ],
     );
   }
 }
