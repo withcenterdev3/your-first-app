@@ -15,6 +15,7 @@ import 'package:your_first_app/patrick-widgets/page20.dart';
 import 'package:your_first_app/patrick-widgets/page21.dart';
 import 'package:your_first_app/patrick-widgets/page22.dart';
 import 'package:your_first_app/patrick-widgets/page23.dart';
+import 'package:your_first_app/patrick-widgets/page24.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -152,6 +153,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 22:
         page = SwipeToDismissDemoPage();
         break;
+      case 23:
+        page = TextFieldDemoPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -242,7 +246,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Draggable Demo')),
                       NavigationRailDestination(
                           icon: Icon(Icons.expand_more),
-                          label: Text('Swipe to Dismiss'))
+                          label: Text('Swipe to Dismiss')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.edit), label: Text('Textfield demo'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
