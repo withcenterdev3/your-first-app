@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/joshuawidgets/parallaxlistjjc.dart';
 import 'package:your_first_app/main.dart';
 import 'joshuawidgets/difflisttypesjjc.dart';
 import 'joshuawidgets/layoutjjc.dart';
 import 'joshuawidgets/listviewjjc.dart';
 import 'joshuawidgets/horizontallistjjc.dart';
 import 'joshuawidgets/gridlistjjc.dart';
+import 'joshuawidgets/spacedlistjjc.dart';
+import 'joshuawidgets/longlistjjc.dart';
+import 'joshuawidgets/floatingappbarjjc.dart';
 
 void main() {
   runApp(const JoshuaPage());
@@ -107,6 +111,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
         break;
+      case 7:
+        page = const SpacedList();
+        break;
+      case 8:
+        page = const LongList();
+        break;
+      case 9:
+        page = const FloatingAppBar();
+        break;
+      case 10:
+        page = const ParallaxList();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -127,46 +143,73 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Row(
           children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: constraints.maxWidth >= 600,
-                destinations: const [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
+            LayoutBuilder(
+              builder: (context, contraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: NavigationRail(
+                        extended: constraints.maxWidth >= 600,
+                        destinations: const [
+                          NavigationRailDestination(
+                            icon: Icon(Icons.home),
+                            label: Text('Home'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.favorite),
+                            label: Text('Favorites'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.image),
+                            label: Text('Layout'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.list),
+                            label: Text('List View'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.compare_arrows_outlined),
+                            label: Text('Horizontal List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.grid_4x4),
+                            label: Text('Grid List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.message),
+                            label: Text('Mixed List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.space_bar),
+                            label: Text('Spaced List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.arrow_downward),
+                            label: Text('Long List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.square),
+                            label: Text('Floating AppBar'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.image),
+                            label: Text('Parallax Items'),
+                          ),
+                        ],
+                        selectedIndex: selectedIndex,
+                        onDestinationSelected: (value) {
+                          setState(() {
+                            selectedIndex = value;
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.image),
-                    label: Text('Layout'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.list),
-                    label: Text('List View'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.compare_arrows_outlined),
-                    label: Text('Horizontal List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.grid_4x4),
-                    label: Text('Grid List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.message),
-                    label: Text('Mixed List'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
-              ),
+                );
+              },
             ),
             Expanded(
               child: Container(
