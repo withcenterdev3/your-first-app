@@ -21,7 +21,7 @@ class SpacedList extends StatelessWidget {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: List.generate(
-                        4,
+                        5,
                         (index) => ItemWidget(text: 'Items $index'),
                       )),
                 ),
