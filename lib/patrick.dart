@@ -13,6 +13,7 @@ import 'package:your_first_app/patrick-widgets/page18.dart';
 import 'package:your_first_app/patrick-widgets/page19.dart';
 import 'package:your_first_app/patrick-widgets/page20.dart';
 import 'package:your_first_app/patrick-widgets/page21.dart';
+import 'package:your_first_app/patrick-widgets/page22.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -144,6 +145,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 20:
         page = InkWellDemoPage();
         break;
+      case 21:
+        page = ExampleDragAndDropPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -228,7 +232,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Gesture Demo')),
                       NavigationRailDestination(
                           icon: Icon(Icons.water_drop),
-                          label: Text('InkWell demo'))
+                          label: Text('InkWell demo')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.highlight_alt),
+                          label: Text('Draggable Demo'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
