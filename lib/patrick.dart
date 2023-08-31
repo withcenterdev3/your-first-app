@@ -1,15 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:your_first_app/patrick-widgets/page10.dart';
-import 'package:your_first_app/patrick-widgets/page11.dart';
-import 'package:your_first_app/patrick-widgets/page12.dart';
-import 'package:your_first_app/patrick-widgets/page13.dart';
-import 'package:your_first_app/patrick-widgets/page14.dart';
-import 'package:your_first_app/patrick-widgets/page15.dart';
-import 'package:your_first_app/patrick-widgets/page16.dart';
-import 'package:your_first_app/patrick-widgets/page17.dart';
-import 'package:your_first_app/patrick-widgets/page18.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -28,6 +19,12 @@ class PatrickPage extends StatelessWidget {
         child: MaterialApp(
           title: 'Namer App',
           theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+            // textTheme: TextTheme(
+            //     displayLarge:
+            //         TextStyle(fontSize: 72, fontWeight: FontWeight.bold))
+          ),
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
             // textTheme: TextTheme(
@@ -90,47 +87,7 @@ class _PatrickContainerState extends State<PatrickContainer> {
         page = GridListPage();
         break;
       case 6:
-        page = LWDiffTypesPage(
-          items: List<ListItem>.generate(
-              1000,
-              (index) => index % 6 == 0
-                  ? HeadingItem('Heading $index')
-                  : MessageItem('Sender $index', 'Message $index')),
-        );
-        break;
-      case 7:
-        page = SpacedItemsPage();
-        break;
-      case 8:
-        page = SpacedItemsPage2();
-        break;
-      case 9:
-        page = LongListPage(
-            items: List<String>.generate(10000, (index) => 'Item $index'));
-        break;
-      case 10:
-        page = HorizonsPage();
-        break;
-      case 11:
-        page = FloatingAppPage();
-        break;
-      case 12:
-        page = ParallaxPage();
-        break;
-      case 13:
-        page = ThemePage();
-        break;
-      case 14:
-        page = MySeasonalThemePage();
-        break;
-      case 15:
-        page = LayoutGridPage();
-        break;
-      case 16:
-        page = GoogleFontsPage();
-        break;
-      case 17:
-        page = LayoutContraintsPage();
+        page = LWDiffTypesPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -151,73 +108,32 @@ class _PatrickContainerState extends State<PatrickContainer> {
           ),
           body: Row(children: [
             SafeArea(
-                child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height),
-                child: IntrinsicHeight(
-                  child: NavigationRail(
-                    extended: constraints.maxWidth >= 600,
-                    destinations: [
-                      NavigationRailDestination(
-                          icon: Icon(Icons.home), label: Text('Home')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.favorite), label: Text('Favorites')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.build),
-                          label: Text('Build A Layout')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.swipe_down),
-                          label: Text('Create A List View')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.swipe_left),
-                          label: Text('Horizontal List')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.view_list_outlined),
-                          label: Text('List with different types of Items')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.speaker_notes),
-                          label: Text('Spaced Items')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.space_bar),
-                          label: Text('Spaced Items 2')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.article), label: Text('Long List')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.linear_scale_sharp),
-                          label: Text('Slivers')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.flag_circle_outlined),
-                          label: Text('Floating app')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.access_alarms_sharp),
-                          label: Text('Parallax')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.light_mode), label: Text('Theme')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.sunny),
-                          label: Text('Seasonal Themeing')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.ac_unit_sharp),
-                          label: Text('Layout Grid')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.font_download),
-                          label: Text('Google Fonts')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.layers_outlined),
-                          label: Text('Constraints'))
-                    ],
-                    selectedIndex: selectedIndex,
-                    onDestinationSelected: (value) {
-                      setState(() {
-                        selectedIndex = value;
-                      });
-                    },
-                  ),
-                ),
-              ),
+                child: NavigationRail(
+              extended: constraints.maxWidth >= 600,
+              destinations: [
+                NavigationRailDestination(
+                    icon: Icon(Icons.home), label: Text('Home')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.favorite), label: Text('Favorites')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.build), label: Text('Build A Layout')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.list), label: Text('Create A List View')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.horizontal_distribute),
+                    label: Text('Horizontal List')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.grid_3x3), label: Text('Grid List')),
+                NavigationRailDestination(
+                    icon: Icon(Icons.view_list_outlined),
+                    label: Text('List with different types of Items')),
+              ],
+              selectedIndex: selectedIndex,
+              onDestinationSelected: (value) {
+                setState(() {
+                  selectedIndex = value;
+                });
+              },
             )),
             Expanded(
                 child: Container(

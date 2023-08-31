@@ -81,6 +81,7 @@ class LocationListItem extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String country;
+  final GlobalKey _backgroundImageKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -96,15 +97,15 @@ class LocationListItem extends StatelessWidget {
         ));
   }
 
-  final GlobalKey _backgroundImageKey = GlobalKey();
-
   Widget _buildParallaxBackground(BuildContext context) {
     return Flow(
         delegate: ParallaxFlowDelegate(
             scrollable: Scrollable.of(context),
             listItemContext: context,
             backgroundImageKey: _backgroundImageKey),
-        children: [Image.network(imageUrl, fit: BoxFit.cover)]);
+        children: [
+          Image.network(imageUrl, key: _backgroundImageKey, fit: BoxFit.cover)
+        ]);
   }
 
   Widget _buildGradient() {
@@ -124,8 +125,8 @@ class LocationListItem extends StatelessWidget {
         left: 20,
         bottom: 20,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(name,
                 style: const TextStyle(

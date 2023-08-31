@@ -30,7 +30,18 @@ class LayoutContraintsPage extends StatelessWidget {
       Example15(),
       Example16(),
       Example17(),
-      Example18()
+      Example18(),
+      Example19(),
+      Example20(),
+      Example21(),
+      Example22(),
+      Example23(),
+      Example24(),
+      Example25(),
+      Example26(),
+      Example27(),
+      Example28(),
+      Example29()
     ]);
   }
 }
@@ -716,16 +727,329 @@ class Example19 extends Example {
       '       child: Text(\'Some Example Text.\')))';
 
   @override
-  final String explanation = 
-    'But what happens if you put the FittedBox inside of a Center widget?'
-    'The Center lets the FittedBox';
+  final String explanation =
+      'But what happens if you put the FittedBox inside of a Center widget? '
+      'The Center lets the FittedBox be any size it wants, up to the screen size.'
+      '\n\n'
+      'The FittedBox then sizes itself to the Text, and lets the Text be any size it wants.'
+      '\n\n'
+      'Since both FittedBox and the Text have the same size, no scaling happens.';
 
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: FittedBox(
-          child: Text('Some Example Text'),
+        child: Text('Some Example Text'),
       ),
-    )
+    );
+  }
+}
+
+class Example20 extends Example {
+  const Example20({super.key});
+
+  @override
+  final code = 'Center(\n'
+      '    child: FittedBox(\n'
+      '        child: Text(\'....\')))';
+
+  @override
+  final String explanation =
+      'However, what happens if FittedBox is inside of a Center widget, but the Text is too large to fit the screen?'
+      '\n\n'
+      'FittedBox tries to size itself to the Text, but it can\'t be bigger than the screen. '
+      'It then assumes the screen size, and resizes Text so that it fits the screen, too.';
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: FittedBox(
+        child: Text(
+            'This is some very very very large text that is too big to fit a regular screen in a single line.'),
+      ),
+    );
+  }
+}
+
+class Example21 extends Example {
+  const Example21({super.key});
+
+  @override
+  final code = 'Center(\n'
+      '    child: Text(\'...\'));';
+
+  @override
+  final String explanation = 'If, however, you remove the FittedBox, '
+      'the Text gets its maximum width from the screen, '
+      'and breaks the line so that it fits the screen.';
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+          'This is some very very very large text that is too big to fit a regular screen in a single line.'),
+    );
+  }
+}
+
+class Example22 extends Example {
+  const Example22({super.key});
+
+  @override
+  final code = 'FittedBox(\n'
+      '    child: Container(\n)'
+      '        height: 20, width: double.infinity));';
+
+  @override
+  final String explanation = 'The FittedBox can\'t contain childs with\n'
+      'infinite size this would produce an error';
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      child: Container(
+        height: 20,
+        width: double.infinity,
+        color: Colors.red,
+      ),
+    );
+  }
+}
+
+class Example23 extends Example {
+  const Example23({super.key});
+
+  @override
+  final code = 'Row(children:[\n'
+      '   Container(color: red, child: Text(\'Hello!\'))'
+      '   Container(color: red, child: Text(\'Goodbye\')))';
+
+  @override
+  final explanation =
+      'This would position it children side by side horizontaly. \n'
+      'Like UnconstrainedBox this won\'t impose a constraints to \n'
+      'its children \n'
+      'and let them decides the size they want';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          color: red,
+          child: Text('Hello'),
+        ),
+        Container(
+          color: red,
+          child: Text('Goodbye'),
+        )
+      ],
+    );
+  }
+}
+
+//////////////
+
+class Example24 extends Example {
+  const Example24({super.key});
+
+  @override
+  final code = 'Row(children:[\n'
+      '   Container(color: red, child: Text(\'...\'))\n'
+      '   Container(color: green, child: Text(\'Goodbye!\')));';
+
+  @override
+  final String explanation =
+      'Because the text is larger than availabe size of the screen'
+      '    it would produce an overflow, this is because Row doesn\'t impose a constraints';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+            color: red,
+            child: Text(
+              'This is a very long text that '
+              'won\'t fit the line.',
+              style: big,
+            )),
+        Container(
+          color: green,
+          child: Text('Goodbye'),
+        )
+      ],
+    );
+  }
+}
+
+class Example25 extends Example {
+  const Example25({super.key});
+
+  @override
+  final code = 'Row(children:[\n'
+      '    Exapanded(\n'
+      '        child: Container(color: red, child: Text(\'...\')))\n'
+      '    Container(color: green, child: Text(\'Goodbye!\'))));';
+
+  @override
+  final explanation = 'Now the it Wrapped it a Expanded \n'
+      'It would now not let it decides it own size \n'
+      'And Expanded would force it child to have its own width';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: Container(
+          color: red,
+          child: Text(
+            'This is a very long text that won\'t fit the line.',
+            style: big,
+          ),
+        )),
+        Container(color: green, child: Text('Goodbye'))
+      ],
+    );
+  }
+}
+
+class Example26 extends Example {
+  const Example26({super.key});
+
+  @override
+  final code = 'Row(children:[\n'
+      '    Expanded(\n'
+      '        child: Container(color: red, child: Text(\'...\'))),\n'
+      '    Expanded(\n'
+      '        child: Container(green, child: Text(\'Goodbye\')))';
+
+  @override
+  final explanation = 'When all row children is wrapped in Exapnded \n'
+      'It would evenly distribute the space to the children \n'
+      'Then the Expanded would force the Container to it\'s \n'
+      'own width';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: Container(
+          color: red,
+          child: const Text(
+            'This is a very long text that won\'t fit the line.',
+            style: big,
+          ),
+        )),
+        Expanded(
+            child: Container(
+          color: green,
+          child: const Text(
+            'Goodbye!',
+            style: big,
+          ),
+        ))
+      ],
+    );
+  }
+}
+
+class Example27 extends Example {
+  const Example27({super.key});
+
+  @override
+  final code = 'Row(children:[\n'
+      '    Flexible(\n'
+      '         child: Container(color: red, child: Text(\'...\')))'
+      '    Flexible(\n'
+      '         child: Container(color: green, child: Text(\'Goodbye!\'))));';
+
+  @override
+  final String explanation = 'This used Flexible instead of Expanded \n'
+      ', difference is, it lets it\'s child '
+      'be smaller that it own sizes'
+      'meanwhile both ignores the children width when sizing themselves ';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+            child: Container(
+          color: red,
+          child: Text(
+            'This is a very long text that won\'t fit the line.',
+            style: big,
+          ),
+        )),
+        Flexible(
+            child: Container(
+          color: green,
+          child: Text(
+            'Goodbye!',
+            style: big,
+          ),
+        )),
+      ],
+    );
+  }
+}
+
+class Example28 extends Example {
+  const Example28({super.key});
+
+  @override
+  final code = 'Scaffold(\n'
+      '   body: Container(color: blue, \n'
+      '   child: Column(\n'
+      '       children:[\n'
+      '           Tex(\'Hello\'),\n'
+      '           Text(\'Goodbye!\')])));';
+
+  @override
+  final explanation = 'Scaffold forces to take the size of the screen \n'
+      'Then the Scafforld tells the Container to take any size it want \n'
+      'as long as it not bigger than the screen ';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: red,
+        child: Column(children: [Text('Hello'), Text('Goodbye!')]),
+      ),
+    );
+  }
+}
+
+class Example29 extends Example {
+  const Example29({super.key});
+
+  @override
+  final code = 'Scaffold(\n'
+      '   body: Container(color:blue, \n'
+      '   child: SizedBox.expanded(\n'
+      '       child: Column(\n'
+      '           children: [\n'
+      '               Text(\'Hello!\'), \n'
+      '               Text(\'Goodbye!\')]))));';
+
+  @override
+  final explanation = 'If you want the scaffold children take the \n'
+      'same size wrapped it around with SizedBox.expand';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Container(
+            color: blue,
+            child: const Column(
+              children: [Text('Hello!'), Text('Goodbye!')],
+            )),
+      ),
+    );
   }
 }

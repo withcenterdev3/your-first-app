@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 class LWDiffTypesPage extends StatelessWidget {
-  const LWDiffTypesPage({super.key});
+  final List<ListItem> items;
+  const LWDiffTypesPage({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(''),
-    );
+        child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+
+              return ListTile(
+                title: item.buildTitle(context),
+                subtitle: item.buildSubtitle(context),
+              );
+            }));
   }
 }
 
@@ -32,4 +41,17 @@ class HeadingItem implements ListItem {
 
   @override
   Widget buildSubtitle(BuildContext context) => const SizedBox.shrink();
+}
+
+class MessageItem implements ListItem {
+  final String sender;
+  final String body;
+
+  MessageItem(this.sender, this.body);
+
+  @override
+  Widget buildTitle(BuildContext context) => Text(sender);
+
+  @override
+  Widget buildSubtitle(BuildContext context) => Text(body);
 }
