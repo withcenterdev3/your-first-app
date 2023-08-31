@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.19.4 <4.0.0"
+  sdk: '>=3.0.3 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -64,13 +64,16 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  assets:
-    - images/lake.jpg
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/lake.jpg
-  #   - images/a_dot_ham.jpeg
-
+  - assets/lake.jpeg
+  - assets/bali.jpeg
+  - assets/gardens.jpeg
+  - assets/machu.jpeg
+  - assets/vitznau.jpeg
+  - assets/mtrushmore.jpeg
+  - assets/mexico.jpeg
+  - assets/cairo.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
