@@ -143,62 +143,73 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Row(
           children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: constraints.maxWidth >= 600,
-                destinations: const [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
+            LayoutBuilder(
+              builder: (context, contraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: NavigationRail(
+                        extended: constraints.maxWidth >= 600,
+                        destinations: const [
+                          NavigationRailDestination(
+                            icon: Icon(Icons.home),
+                            label: Text('Home'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.favorite),
+                            label: Text('Favorites'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.image),
+                            label: Text('Layout'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.list),
+                            label: Text('List View'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.compare_arrows_outlined),
+                            label: Text('Horizontal List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.grid_4x4),
+                            label: Text('Grid List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.message),
+                            label: Text('Mixed List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.space_bar),
+                            label: Text('Spaced List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.arrow_downward),
+                            label: Text('Long List'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.square),
+                            label: Text('Floating AppBar'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.image),
+                            label: Text('Parallax Items'),
+                          ),
+                        ],
+                        selectedIndex: selectedIndex,
+                        onDestinationSelected: (value) {
+                          setState(() {
+                            selectedIndex = value;
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.image),
-                    label: Text('Layout'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.list),
-                    label: Text('List View'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.compare_arrows_outlined),
-                    label: Text('Horizontal List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.grid_4x4),
-                    label: Text('Grid List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.message),
-                    label: Text('Mixed List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.space_bar),
-                    label: Text('Spaced List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.arrow_downward),
-                    label: Text('Long List'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.square),
-                    label: Text('Floating AppBar'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.image),
-                    label: Text('Parallax Items'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
-              ),
+                );
+              },
             ),
             Expanded(
               child: Container(

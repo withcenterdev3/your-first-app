@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
 class ParallaxList extends StatelessWidget {
   const ParallaxList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      home: const Scaffold(
+        body: Center(
+          child: ParallaxItem(),
+        ),
+      ),
+    );
+  }
+}
+
+class ParallaxItem extends StatelessWidget {
+  const ParallaxItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +38,7 @@ class ParallaxList extends StatelessWidget {
   }
 }
 
-@immutable
 class LocationListItem extends StatelessWidget {
-  final GlobalKey _backgroundImageKey = GlobalKey();
-
-  Widget _buildParallaxBackground(BuildContext context) {
-    return Flow(
-      delegate: ParallaxFlowDelegate(
-        scrollable: Scrollable.of(context),
-        listItemContext: context,
-        backgroundImageKey: _backgroundImageKey,
-      ),
-      children: [
-        Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-        ),
-      ],
-    );
-  }
-
   LocationListItem({
     super.key,
     required this.imageUrl,
@@ -49,6 +49,7 @@ class LocationListItem extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String country;
+  final GlobalKey _backgroundImageKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +71,24 @@ class LocationListItem extends StatelessWidget {
     );
   }
 
+  Widget _buildParallaxBackground(BuildContext context) {
+    return Flow(
+      delegate: ParallaxFlowDelegate(
+        scrollable: Scrollable.of(context),
+        listItemContext: context,
+        backgroundImageKey: _backgroundImageKey,
+      ),
+      children: [
+        Image.asset(
+          imageUrl,
+          //never forget this one, always set a value for global key
+          key: _backgroundImageKey,
+          fit: BoxFit.cover,
+        ),
+      ],
+    );
+  }
+
   Widget _buildGradient() {
     return Positioned.fill(
       child: DecoratedBox(
@@ -87,8 +106,8 @@ class LocationListItem extends StatelessWidget {
 
   Widget _buildTitleAndSubtitle() {
     return Positioned(
-      top: 20,
       left: 20,
+      bottom: 20,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,6 +182,108 @@ class ParallaxFlowDelegate extends FlowDelegate {
   }
 }
 
+class Parallax extends SingleChildRenderObjectWidget {
+  const Parallax({
+    super.key,
+    required Widget background,
+  }) : super(child: background);
+
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return RenderParallax(scrollable: Scrollable.of(context));
+  }
+
+  @override
+  void updateRenderObject(
+      BuildContext context, covariant RenderParallax renderObject) {
+    renderObject.scrollable = Scrollable.of(context);
+  }
+}
+
+class ParallaxParentData extends ContainerBoxParentData<RenderBox> {}
+
+class RenderParallax extends RenderBox
+    with RenderObjectWithChildMixin<RenderBox>, RenderProxyBoxMixin {
+  RenderParallax({
+    required ScrollableState scrollable,
+  }) : _scrollable = scrollable;
+
+  ScrollableState _scrollable;
+  ScrollableState get scrollable => _scrollable;
+
+  set scrollable(ScrollableState value) {
+    if (value != _scrollable) {
+      if (attached) {
+        _scrollable.position.removeListener(markNeedsLayout);
+      } else {
+        _scrollable.position.addListener(markNeedsLayout);
+      }
+      _scrollable = value;
+      if (attached) {
+        _scrollable.position.addListener(markNeedsLayout);
+      }
+    }
+  }
+
+  @override
+  void attach(covariant PipelineOwner owner) {
+    super.attach(owner);
+    _scrollable.position.addListener(markNeedsLayout);
+  }
+
+  @override
+  void detach() {
+    _scrollable.position.removeListener(markNeedsLayout);
+    super.detach();
+  }
+
+  @override
+  void setupParentData(covariant RenderObject child) {
+    if (child.parentData is! ParallaxParentData) {
+      child.parentData = ParallaxParentData();
+    }
+  }
+
+  @override
+  void performLayout() {
+    size = constraints.biggest;
+
+    final background = child!;
+    final backgroundImageConstraints =
+        BoxConstraints.tightFor(width: size.width);
+    background.layout(
+      backgroundImageConstraints,
+      parentUsesSize: true,
+    );
+    (background.parentData as ParallaxParentData).offset = Offset.zero;
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    final viewportDimension = scrollable.position.viewportDimension;
+    final scrollableBox = scrollable.context.findRenderObject();
+    final backgroundOffset =
+        localToGlobal(size.centerLeft(Offset.zero), ancestor: scrollableBox);
+    final scrollFraction =
+        (backgroundOffset.dy / viewportDimension).clamp(0.0, 1.0);
+
+    final verticalAlignment = Alignment(0.0, scrollFraction);
+
+    final background = child!;
+    final backgroundSizee = background.size;
+    final listItemSize = size;
+    final childRect =
+        verticalAlignment.inscribe(backgroundSizee, Offset.zero & listItemSize);
+
+    context.paintChild(
+      background,
+      (background.parentData as ParallaxParentData).offset +
+          offset +
+          Offset(0.0, childRect.top),
+    );
+  }
+}
+
 class Location {
   const Location({
     required this.name,
@@ -174,6 +295,9 @@ class Location {
   final String place;
   final String imageUrl;
 }
+
+// const urlPrefix =
+// 'https://docs.flutter.dev/cookbook/img-files/effects/parallax';
 
 const locations = [
   Location(
