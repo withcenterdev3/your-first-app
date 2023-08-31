@@ -66,6 +66,13 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
   - assets/lake.jpeg
+  - assets/bali.jpeg
+  - assets/gardens.jpeg
+  - assets/machu.jpeg
+  - assets/vitznau.jpeg
+  - assets/mtrushmore.jpeg
+  - assets/mexico.jpeg
+  - assets/cairo.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
