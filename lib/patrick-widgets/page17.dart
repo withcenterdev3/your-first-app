@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:your_first_app/main.dart';
 
 class GoogleFontsPage extends StatelessWidget {
   const GoogleFontsPage({super.key});
