@@ -19,6 +19,7 @@ import 'package:your_first_app/patrick-widgets/page23.dart';
 import 'package:your_first_app/patrick-widgets/page24.dart';
 import 'package:your_first_app/patrick-widgets/page25.dart';
 import 'package:your_first_app/patrick-widgets/page27.dart';
+import 'package:your_first_app/patrick-widgets/page28.dart';
 import 'package:your_first_app/patrick-widgets/page3.dart';
 import 'package:your_first_app/patrick-widgets/page4.dart';
 import 'package:your_first_app/patrick-widgets/page5.dart';
@@ -168,6 +169,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 26:
         page = FormValidationDemoPage();
         break;
+      case 27:
+        page = SnackBarDemoPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -270,7 +274,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Text Field Focus')),
                       NavigationRailDestination(
                           icon: Icon(Icons.featured_play_list),
-                          label: Text('Form Validation'))
+                          label: Text('Form Validation')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.icecream),
+                          label: Text('SnackBar demo'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
