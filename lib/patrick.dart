@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:your_first_app/page26.dart';
 import 'package:your_first_app/patrick-widgets/page10.dart';
 import 'package:your_first_app/patrick-widgets/page11.dart';
 import 'package:your_first_app/patrick-widgets/page12.dart';
@@ -160,6 +161,9 @@ class _PatrickContainerState extends State<PatrickContainer> {
       case 24:
         page = TextFieldChangeHandlingPage();
         break;
+      case 25:
+        page = TextFieldFocusPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -256,7 +260,10 @@ class _PatrickContainerState extends State<PatrickContainer> {
                           label: Text('Textfield demo')),
                       NavigationRailDestination(
                           icon: Icon(Icons.drive_file_rename_outline),
-                          label: Text('Handling Changes'))
+                          label: Text('Handling Changes')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.center_focus_strong),
+                          label: Text('Text Field Focus'))
                     ],
                     selectedIndex: selectedIndex,
                     onDestinationSelected: (value) {
